@@ -32,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .stream()
                 .map(customer -> {
                     CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-                    customerDTO.setCustomerUrl(format("/shop/customer/%d", customer.getId()));
+                    customerDTO.setCustomerUrl(format("/api/v1/customer/%d", customer.getId()));
                     return customerDTO;
                 })
                 .collect(Collectors.toList());
@@ -46,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
                         .orElseThrow(RuntimeException::new));
 
         if (Objects.nonNull(customer)) {
-            customer.setCustomerUrl(format("/shop/customer/%d", customer.getId()));
+            customer.setCustomerUrl(format("/api/v1/customers/%d", customer.getId()));
         }
 
         return customer;
@@ -63,7 +63,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         CustomerDTO returnDto = customerMapper.customerToCustomerDTO(savedCustomer);
 
-        returnDto.setCustomerUrl("/api/v1/customer/" + savedCustomer.getId());
+        returnDto.setCustomerUrl("/api/v1/customers/" + savedCustomer.getId());
 
         return returnDto;
     }
@@ -88,7 +88,12 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.setLastName(customerDTO.getLastName());
             }
 
-            return customerMapper.customerToCustomerDTO(customerRepository.save(customer));
+            CustomerDTO returnDto = customerMapper.customerToCustomerDTO(customerRepository.save(customer));
+
+            returnDto.setCustomerUrl("/api/v1/customers/" + id);
+
+            return returnDto;
+
         }).orElseThrow(RuntimeException::new); //todo implement better exception handling;
     }
 }
