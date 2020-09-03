@@ -1,12 +1,16 @@
 package guru.springfamework.api.v1.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Aleksandr Beryozkin
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CustomerDTO {
     private Long id;
     @JsonProperty("firstname")

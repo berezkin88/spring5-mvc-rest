@@ -16,11 +16,12 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CustomerServiceTest {
+public class CustomerServiceImplTest {
 
     @InjectMocks
     private CustomerServiceImpl customerService;
@@ -60,5 +61,24 @@ public class CustomerServiceTest {
         assertEquals(Long.valueOf(1L), actual.getId());
         assertEquals("Mike", actual.getFirstName());
         assertEquals("/shop/customer/1", actual.getCustomerUrl());
+    }
+
+    @Test
+    public void createNewCustomer() throws Exception {
+
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName("Jim");
+
+        Customer savedCustomer = new Customer();
+        savedCustomer.setFirstName(customerDTO.getFirstName());
+        savedCustomer.setLastName(customerDTO.getLastName());
+        savedCustomer.setId(1L);
+
+        when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
+
+        CustomerDTO savedDto = customerService.createNewCustomer(customerDTO);
+
+        assertEquals(customerDTO.getFirstName(), savedDto.getFirstName());
+        assertEquals("/api/v1/customer/1", savedDto.getCustomerUrl());
     }
 }
