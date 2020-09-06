@@ -25,12 +25,26 @@
         <org.mapstruct.version>1.2.0.Final</org.mapstruct.version>
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
         <springfox-swagger.version>2.9.2</springfox-swagger.version>
+        <woodstox-core-asl.version>4.4.1</woodstox-core-asl.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.woodstox</groupId>
+            <artifactId>woodstox-core-asl</artifactId>
+            <version>${woodstox-core-asl.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
